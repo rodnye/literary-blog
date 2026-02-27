@@ -1,62 +1,46 @@
-# Astro Starter Kit: Blog
+# Literary Blog
 
-```sh
-pnpm create astro@latest -- --template blog
+![Astro](https://img.shields.io/badge/Astro-0C1222?style=for-the-badge&logo=astro&logoColor=FDFDFE)
+![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)
+![Decap CMS](https://img.shields.io/badge/Decap%20CMS-6E2C8C?style=for-the-badge&logo=decap-cms&logoColor=white)
+![Decap Bridge](https://img.shields.io/badge/Decap%20Bridge-4A90E2?style=for-the-badge&logo=auth0&logoColor=white)
+![Netlify](https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)
+![pnpm](https://img.shields.io/badge/pnpm-F69220?style=for-the-badge&logo=pnpm&logoColor=white)
+
+Sitio web personal construido con Astro, disponible en [quemeimporta.netlify.app](https://quemeimporta.netlify.app). El repositorio separa el código fuente del contenido mediante un flujo basado en dos ramas y un script de actualización.
+
+## Ramas
+
+- **master** – Código fuente de la aplicación Astro.
+- **editorial_workflow** – Contenido del blog (markdown e imágenes).
+
+## Flujo de contenido
+
+El contenido se gestiona de forma aislada. En `master` hay un script que descarga un ZIP de la rama `editorial_workflow` y lo copia en los directorios correspondientes (`src/content`, `public/images`), respetando `.gitignore` anidados para evitar versionar el contenido.
+
+```bash
+pnpm storage:update
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## CMS y autenticación
 
-Features:
+- **Decap CMS** interfaz en `/admin` para editar contenido.
+- **Decap Bridge** gestiona el identity login con GitHub.
 
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and OpenGraph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
+Los cambios se comitean automáticamente en la rama `editorial_workflow`.
 
-## 🚀 Project Structure
+## Instalación local
 
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-├── public/
-├── src/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
-├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
+```bash
+git clone https://github.com/rodnye/literary-blog.git
+cd literary-blog
+pnpm install
+pnpm storage:update # Opcional, pero el blog estará vacío
+pnpm dev
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+---
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                | Action                                           |
-| :--------------------- | :----------------------------------------------- |
-| `pnpm install`         | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
-
-## Credit
-
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+Enlaces de interés:
+- [Docs de Astro](https://astro.build)
+- [Decap CMS](https://decapcms.org/docs/)
