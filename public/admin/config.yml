@@ -1,0 +1,31 @@
+publish_mode: editorial_workflow
+media_folder: 'public/images/uploads'
+public_folder: '/images/uploads'
+
+backend:
+  name: git-gateway
+  branch: editorial_workflow
+  commit_messages:
+    create: Create {{collection}} “{{slug}}”
+    update: Update {{collection}} “{{slug}}”
+    delete: Delete {{collection}} “{{slug}}”
+    uploadMedia: Upload “{{path}}”
+    deleteMedia: Delete “{{path}}”
+    openAuthoring: '{{message}}'
+
+collections:
+  - name: 'blog' # Used in routes, e.g., /admin/collections/blog
+    label: 'Blog' # Used in the UI
+    folder: 'src/content/blog' # The path to the folder where the documents are stored
+    create: true # Allow users to create new documents in this collection
+    slug: '{{year}}-{{month}}-{{day}}-{{slug}}' # Filename template, e.g., YYYY-MM-DD-title.md
+    fields: # The fields for each document, usually in front matter
+      - { label: 'Título', name: 'title', widget: 'string' }
+      - {
+          label: 'Descripción o pequeño resumen',
+          name: 'description',
+          widget: 'string',
+        }
+      - { label: 'Fecha de publicación', name: 'pubDate', widget: 'datetime' }
+      - { label: 'Imagen de portada', name: 'heroImage', widget: 'image' }
+      - { label: 'Contenido', name: 'body', widget: 'markdown' }
