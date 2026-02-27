@@ -1,5 +1,6 @@
 ---
 import { AUTHOR_NAME, AUTHOR_BIO, WATTPAD_URL } from '../consts';
+import { Icon } from 'astro-icon/components';
 import authorImage from '../assets/blog-placeholder-about.jpg';
 ---
 
@@ -19,22 +20,21 @@ import authorImage from '../assets/blog-placeholder-about.jpg';
     <div class="flex-1">
       <h2 class="text-3xl font-serif font-bold mb-2">{AUTHOR_NAME}</h2>
       <p class="text-muted mb-4">{AUTHOR_BIO}</p>
-      <div class="flex gap-4">
+      <div
+        class="flex flex-col space-y-3 md:space-x-3 md:space-y-0 md:flex-row"
+      >
         <a
           href={WATTPAD_URL}
           target="_blank"
-          class="inline-flex items-center gap-2 bg-primary text-white px-6 py-2 rounded-full hover:bg-secondary transition-colors font-bold"
+          class="inline-flex items-center bg-primary px-6 py-2 rounded-full font-bold"
         >
-          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M13.48 2.1C9.4 2.1 6.1 5.4 6.1 9.5c0 1.8.6 3.5 1.6 4.9.3.4.3.9 0 1.3l-1.4 2.1c-.3.5.1 1.1.7 1.1h12.2c.6 0 1-.6.7-1.1l-1.4-2.1c-.3-.4-.3-1 0-1.4 1-1.4 1.6-3.1 1.6-4.9 0-4-3.3-7.3-7.4-7.3z"
-            ></path>
-          </svg>
-          Wattpad
+          <span class="text-white flex items-center">
+            <Icon class="text-2xl mr-3" name="simple-icons:wattpad" /> Wattpad
+          </span>
         </a>
         <a
           href="/about"
-          class="inline-flex items-center gap-2 border-2 border-primary text-primary px-6 py-2 rounded-full hover:bg-primary/10 transition-colors font-bold"
+          class="inline-flex items-center border-2 border-primary text-primary px-6 py-2 rounded-full hover:bg-primary/10 transition-colors font-bold"
         >
           Más sobre mí
         </a>
