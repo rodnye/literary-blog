@@ -1,5 +1,5 @@
-media_folder: 'public/images/uploads'
-public_folder: '/images/uploads'
+media_folder: '/src/assets/images/uploads'
+public_folder: '/src/assets/images/uploads'
 
 # Use DecapBridge classic auth (required)
 backend:
