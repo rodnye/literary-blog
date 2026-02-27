@@ -2,60 +2,94 @@
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import AboutAuthor from '../components/AboutAuthor.astro';
+import { SITE_TITLE, SITE_DESCRIPTION, AUTHOR_NAME } from '../consts';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
   </head>
-  <body>
+  <body class="bg-background">
     <Header />
-    <main>
-      <h1>🧑‍🚀 Hello, Astronaut!</h1>
-      <p>
-        Welcome to the official <a href="https://astro.build/">Astro</a> blog starter
-        template. This template serves as a lightweight, minimally-styled starting
-        point for anyone looking to build a personal website, blog, or portfolio with
-        Astro.
-      </p>
-      <p>
-        This template comes with a few integrations already configured in your
-        <code>astro.config.mjs</code> file. You can customize your setup with
-        <a href="https://astro.build/integrations">Astro Integrations</a> to add tools
-        like Tailwind, React, or Vue to your project.
-      </p>
-      <p>Here are a few ideas on how to get started with the template:</p>
-      <ul>
-        <li>Edit this page in <code>src/pages/index.astro</code></li>
-        <li>
-          Edit the site header items in <code>src/components/Header.astro</code>
-        </li>
-        <li>
-          Add your name to the footer in <code
-            >src/components/Footer.astro</code>
-        </li>
-        <li>
-          Check out the included blog posts in <code>src/content/blog/</code>
-        </li>
-        <li>
-          Customize the blog post page layout in <code
-            >src/layouts/BlogPost.astro</code>
-        </li>
-      </ul>
-      <p>
-        Have fun! If you get stuck, remember to
-        <a href="https://docs.astro.build/">read the docs</a>
-        or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-      </p>
-      <p>
-        Looking for a blog template with a bit more personality? Check out
-        <a href="https://github.com/Charca/astro-blog-template"
-          >astro-blog-template</a
+    <main class="container py-12">
+      <!-- Hero  -->
+      <section class="text-center py-16 md:py-24 relative">
+        <h1
+          class="text-6xl md:text-8xl font-serif font-black text-foreground mb-4 tracking-tight"
         >
-        by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-      </p>
+          ¡Que me <span class="text-primary">importa</span>!
+        </h1>
+        <p class="text-xl md:text-2xl text-muted max-w-2xl mx-auto">
+          {SITE_DESCRIPTION}
+        </p>
+        <div
+          class="absolute top-0 left-0 w-32 h-32 bg-primary/10 rounded-full -z-10 blur-3xl"
+        >
+        </div>
+        <div
+          class="absolute bottom-0 right-0 w-48 h-48 bg-secondary/10 rounded-full -z-10 blur-3xl"
+        >
+        </div>
+      </section>
+
+      <!-- latest posts -->
+      <section class="my-16">
+        <h2 class="text-4xl font-serif font-bold mb-8 text-center">
+          Últimas entradas
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {
+            posts.map((post) => (
+              <a
+                href={`/blog/${post.id}/`}
+                class="group block bg-white rounded-2xl shadow-card hover:shadow-card-hover transition overflow-hidden"
+              >
+                {post.data.heroImage && (
+                  <img
+                    src={post.data.heroImage.src}
+                    alt=""
+                    class="w-full h-48 object-cover"
+                  />
+                )}
+                <div class="p-6">
+                  <time class="text-sm text-muted">
+                    {post.data.pubDate.toLocaleDateString('es-ES', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    })}
+                  </time>
+                  <h3 class="text-2xl font-serif font-bold mt-2 group-hover:text-primary transition-colors">
+                    {post.data.title}
+                  </h3>
+                  <p class="text-muted mt-2 line-clamp-2">
+                    {post.data.description}
+                  </p>
+                  <span class="inline-block mt-4 text-primary font-bold">
+                    Leer más →
+                  </span>
+                </div>
+              </a>
+            ))
+          }
+        </div>
+        <div class="text-center mt-12">
+          <a
+            href="/blog"
+            class="bg-secondary text-white px-8 py-3 rounded-full font-bold hover:bg-primary transition-colors"
+            >Ver todos los posts</a
+          >
+        </div>
+      </section>
+
+      <AboutAuthor />
     </main>
     <Footer />
   </body>

@@ -3,9 +3,8 @@ import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
-import FormattedDate from '../../components/FormattedDate.astro';
 import Header from '../../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
 
 const posts = (await getCollection('blog')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
@@ -13,106 +12,59 @@ const posts = (await getCollection('blog')).sort(
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-    <style>
-      main {
-        width: 960px;
-      }
-      ul {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 2rem;
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-      }
-      ul li {
-        width: calc(50% - 1rem);
-      }
-      ul li * {
-        text-decoration: none;
-        transition: 0.2s ease;
-      }
-      ul li:first-child {
-        width: 100%;
-        margin-bottom: 1rem;
-        text-align: center;
-      }
-      ul li:first-child img {
-        width: 100%;
-      }
-      ul li:first-child .title {
-        font-size: 2.369rem;
-      }
-      ul li img {
-        margin-bottom: 0.5rem;
-        border-radius: 12px;
-      }
-      ul li a {
-        display: block;
-      }
-      .title {
-        margin: 0;
-        color: rgb(var(--black));
-        line-height: 1;
-      }
-      .date {
-        margin: 0;
-        color: rgb(var(--gray));
-      }
-      ul li a:hover h4,
-      ul li a:hover .date {
-        color: rgb(var(--accent));
-      }
-      ul a:hover img {
-        box-shadow: var(--box-shadow);
-      }
-      @media (max-width: 720px) {
-        ul {
-          gap: 0.5em;
-        }
-        ul li {
-          width: 100%;
-          text-align: center;
-        }
-        ul li:first-child {
-          margin-bottom: 0;
-        }
-        ul li:first-child .title {
-          font-size: 1.563em;
-        }
-      }
-    </style>
+    <BaseHead title={`Blog · ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
   </head>
-  <body>
+  <body class="bg-background">
     <Header />
-    <main>
-      <section>
-        <ul>
-          {
-            posts.map((post) => (
-              <li>
-                <a href={`/blog/${post.id}/`}>
-                  {post.data.heroImage && (
-                    <Image
-                      width={720}
-                      height={360}
-                      src={post.data.heroImage}
-                      alt=""
-                    />
-                  )}
-                  <h4 class="title">{post.data.title}</h4>
-                  <p class="date">
-                    <FormattedDate date={post.data.pubDate} />
-                  </p>
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </section>
+    <main class="container py-12">
+      <h1 class="text-5xl font-serif font-bold mb-4 text-center">Blog</h1>
+      <p class="text-center text-muted max-w-2xl mx-auto mb-12">
+        La lectura es aventura, escape, entretenimiento, infinito. La realidad
+        es dura, cruda, asfixiante, cerrada, y limitativa. -- Alex Mírez
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+        {
+          posts.map((post, index) => (
+            <a
+              href={`/blog/${post.id}/`}
+              class:list={[
+                'group block bg-white rounded-2xl shadow-card hover:shadow-card-hover transition overflow-hidden',
+                index === 0 ? 'md:col-span-2' : '', // primer post destacado
+              ]}
+            >
+              {post.data.heroImage && (
+                <img
+                  src={post.data.heroImage.src}
+                  alt=""
+                  class:list={[
+                    'w-full object-cover',
+                    index === 0 ? 'h-96' : 'h-64',
+                  ]}
+                />
+              )}
+              <div class="p-8">
+                <time class="text-sm text-muted">
+                  {post.data.pubDate.toLocaleDateString('es-ES', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                  })}
+                </time>
+                <h2 class="text-3xl font-serif font-bold mt-2 group-hover:text-primary transition-colors">
+                  {post.data.title}
+                </h2>
+                <p class="text-muted mt-3 text-lg">{post.data.description}</p>
+                <span class="inline-block mt-6 text-primary font-bold text-lg">
+                  Leer artículo →
+                </span>
+              </div>
+            </a>
+          ))
+        }
+      </div>
     </main>
     <Footer />
   </body>
