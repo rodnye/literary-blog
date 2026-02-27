@@ -3,10 +3,12 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
+    "postinstall": "pnpm blog:sync",
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "blog:sync": "tsx ./scripts/blog-sync.ts"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
@@ -14,10 +16,14 @@
     "@astrojs/sitemap": "^3.7.0",
     "@iconify-json/simple-icons": "^1.2.71",
     "@tailwindcss/vite": "^4.2.1",
+    "@types/adm-zip": "^0.5.7",
+    "adm-zip": "^0.5.16",
     "astro": "^5.17.1",
     "astro-icon": "^1.1.5",
+    "dotenv": "^17.3.1",
     "sharp": "^0.34.3",
-    "tailwindcss": "^4.2.1"
+    "tailwindcss": "^4.2.1",
+    "tsx": "^4.21.0"
   },
   "devDependencies": {
     "prettier": "3.8.1",
