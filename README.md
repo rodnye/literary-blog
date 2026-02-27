@@ -1,4 +1,4 @@
-# Literary Blog
+# Literary Blog -->
 
 ![Astro](https://img.shields.io/badge/Astro-0C1222?style=for-the-badge&logo=astro&logoColor=FDFDFE)
 ![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)
@@ -7,7 +7,7 @@
 ![Netlify](https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)
 ![pnpm](https://img.shields.io/badge/pnpm-F69220?style=for-the-badge&logo=pnpm&logoColor=white)
 
-Sitio web personal construido con Astro, disponible en [quemeimporta.netlify.app](https://quemeimporta.netlify.app). El repositorio separa el código fuente del contenido mediante un flujo basado en dos ramas y un script de actualización.
+Sitio web construido con Astro, disponible en [quemeimporta.netlify.app](https://quemeimporta.netlify.app). El repositorio separa el código fuente del contenido mediante un flujo basado en dos ramas y un script de actualización.
 
 ## Ramas
 
@@ -16,10 +16,10 @@ Sitio web personal construido con Astro, disponible en [quemeimporta.netlify.app
 
 ## Flujo de contenido
 
-El contenido se gestiona de forma aislada. En `master` hay un script que descarga un ZIP de la rama `editorial_workflow` y lo copia en los directorios correspondientes (`src/content`, `public/images`), respetando `.gitignore` anidados para evitar versionar el contenido.
+El contenido se gestiona de forma aislada. En `master` hay un script que descarga un ZIP de la rama `editorial_workflow` y lo copia en los directorios correspondientes (`src/content`, `src/assets/images`), respetando `.gitignore` anidados para evitar versionar el contenido.
 
 ```bash
-pnpm storage:update
+pnpm blog:sync
 ```
 
 ## CMS y autenticación
@@ -35,7 +35,7 @@ Los cambios se comitean automáticamente en la rama `editorial_workflow`.
 git clone https://github.com/rodnye/literary-blog.git
 cd literary-blog
 pnpm install
-pnpm storage:update # Opcional, pero el blog estará vacío
+pnpm blog:sync # Opcional, pero el blog estará vacío
 pnpm dev
 ```
 
