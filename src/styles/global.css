@@ -1,7 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700;900&display=swap');
 @import 'tailwindcss';
 
 @theme {
-  --color-background: #faf7f2;
+  --color-background: #f1f1f1;
   --color-foreground: #2d3047;
   --color-primary: #dd2121;
   --color-secondary: #d13772;
@@ -15,8 +17,6 @@
   --shadow-card-hover:
     0 12px 28px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.05);
 }
-
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&display=swap');
 
 body {
   background-color: var(--color-background);
