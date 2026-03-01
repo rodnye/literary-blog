@@ -1,0 +1,14 @@
+name: Trigger Cloudflare Pages Build
+on:
+  push:
+    branches:
+      - master
+      - editorial_workflow
+
+jobs:
+  build:
+    name: Request Cloudflare Webhook
+    runs-on: ubuntu-latest
+    steps:
+      - name: Curl request
+        run: curl -X POST -d {} ${{ secrets.CLOUDFLARE_BUILD_HOOK }}
