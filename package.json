@@ -6,11 +6,14 @@
     "postinstall": "pnpm blog:sync",
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
+    "preview": "pnpm run build && wrangler dev",
     "astro": "astro",
-    "blog:sync": "tsx ./scripts/blog-sync.ts"
+    "blog:sync": "tsx ./scripts/blog-sync.ts",
+    "deploy": "pnpm run build && wrangler deploy",
+    "cf-typegen": "wrangler types"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^12.6.12",
     "@astrojs/mdx": "^4.3.13",
     "@astrojs/rss": "^4.0.15",
     "@astrojs/sitemap": "^3.7.0",
@@ -27,6 +30,7 @@
   },
   "devDependencies": {
     "prettier": "3.8.1",
-    "prettier-plugin-astro": "0.14.1"
+    "prettier-plugin-astro": "0.14.1",
+    "wrangler": "^4.69.0"
   }
 }
