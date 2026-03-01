@@ -127,12 +127,13 @@ const main = async () => {
   const contentDir = join(
     extractDir,
     (await fs.readdir(extractDir))[0], // entrar a la carpeta del zip
+    '/src', // solo copiar src
   );
   const entries = await fs.readdir(contentDir);
   for (const entry of entries) {
     if (entry === 'README.md') continue;
     const fullPath = join(contentDir, entry);
-    await copyRecursive(fullPath, resolve(process.cwd(), entry));
+    await copyRecursive(fullPath, join(process.cwd(), '/src', entry));
   }
 
   // Limpieza de archivos temporales
@@ -141,7 +142,10 @@ const main = async () => {
 };
 
 main()
-  .then(() => console.log('proceso finalizado'))
+  .then(() => {
+    console.log('proceso finalizado');
+    process.exit(0);
+  })
   .catch((err) => {
     console.error(err);
     process.exit(1);
