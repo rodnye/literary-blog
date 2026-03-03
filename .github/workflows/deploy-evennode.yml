@@ -1,0 +1,25 @@
+name: Deploy to EvenNode
+
+on:
+  push:
+    branches:
+      - master
+      - editorial_workflow
+
+jobs:
+  Deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: master
+
+      - name: EvenNode Deploy
+        uses: rodnye/evennode-deploy-action@v0.0.2-alpha
+        with:
+          key: ${{ secrets.SSH_KEY }}
+          git_url: ${{ secrets.EVENNODE_REPO_URL }}
+          git_name: ${{ secrets.GIT_NAME }}
+          git_email: ${{ secrets.GIT_EMAIL }}
