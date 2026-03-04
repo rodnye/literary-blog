@@ -7,6 +7,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "start": "astro build && sh -c 'astro preview --port ${PORT:-4321}'",
     "astro": "astro",
     "blog:sync": "tsx ./scripts/blog-sync.ts"
   },
