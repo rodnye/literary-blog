@@ -19,6 +19,11 @@ jobs:
       - name: EvenNode Deploy
         uses: rodnye/evennode-deploy-action@v0.0.2-alpha
         with:
+          pre_commit_command: |
+            rm -rf .git
+            git init
+            git branch -m main
+            git add .
           key: ${{ secrets.SSH_KEY }}
           git_url: ${{ secrets.EVENNODE_REPO_URL }}
           git_name: ${{ secrets.GIT_NAME }}
