@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "postinstall": "pnpm blog:sync",
+    "postinstall": "npx pnpm blog:sync",
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
