@@ -1,0 +1,4 @@
+{
+  "$schema": "https://rodnye.github.io/json-schemas/schemas/storage-seed/v2.json",
+  "include": ["src/content/blog/**/*.md", "src/assets/**/*"]
+}
