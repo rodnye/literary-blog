@@ -1,9 +1,15 @@
-import { promises as fs } from 'fs';
-import { join, resolve, dirname } from 'path';
 import * as dotenv from 'dotenv';
 import glob from 'fast-glob';
 import simpleGit, { CheckRepoActions } from 'simple-git';
-import { access, mkdir, readFile, writeFile } from 'fs/promises';
+import { join, resolve, dirname } from 'node:path';
+import {
+  access,
+  appendFile,
+  copyFile,
+  mkdir,
+  readFile,
+  writeFile,
+} from 'node:fs/promises';
 
 dotenv.config();
 
@@ -72,7 +78,7 @@ const appendToGitignore = async (dir: string, entry: string) => {
 
   await ensureGitignore(gitignorePath);
   if (!(await readFile(gitignorePath, 'utf8')).includes('\n' + entry)) {
-    await fs.appendFile(gitignorePath, `${entry}\n`);
+    await appendFile(gitignorePath, `${entry}\n`);
     console.log(`  → Added "${entry}" to ${gitignorePath}`);
   }
 };
@@ -88,7 +94,7 @@ const main = async () => {
 
   // Read copy.json
   const seedJsonPath = join(cacheDir, 'copy.json');
-  const seedJsonContent = await fs.readFile(seedJsonPath, 'utf-8');
+  const seedJsonContent = await readFile(seedJsonPath, 'utf-8');
   const config = JSON.parse(seedJsonContent);
 
   //copy files according to include/exclude
@@ -106,8 +112,8 @@ const main = async () => {
 
     console.log(`Copying: ${relativePath}`);
 
-    await fs.mkdir(destDir, { recursive: true });
-    await fs.copyFile(src, dest);
+    await mkdir(destDir, { recursive: true });
+    await copyFile(src, dest);
     await appendToGitignore(destDir, fileName);
   }
 
