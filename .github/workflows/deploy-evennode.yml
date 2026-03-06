@@ -25,8 +25,9 @@ jobs:
             git init
             git branch -m main
             npm install
-            npm build
-            git add dist node_modules package.json package-lock.json
+            npm run blog:sync
+            npm run build
+            git add -f dist package.json package-lock.json
           key: ${{ secrets.SSH_KEY }}
           git_url: ${{ secrets.EVENNODE_REPO_URL }}
           git_name: ${{ secrets.GIT_NAME }}
