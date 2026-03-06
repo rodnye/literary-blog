@@ -7,11 +7,16 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "start": "astro build && sh -c 'astro preview --port ${PORT:-4321}'",
+    "start": "serve ./dist",
     "astro": "astro",
     "blog:sync": "tsx ./scripts/blog-sync.ts"
   },
   "dependencies": {
+    "serve": "^14.2.6"
+  },
+  "devDependencies": {
+    "prettier": "3.8.1",
+    "prettier-plugin-astro": "0.14.1",
     "@astrojs/mdx": "^4.3.13",
     "@astrojs/rss": "^4.0.15",
     "@astrojs/sitemap": "^3.7.0",
@@ -25,9 +30,5 @@
     "sharp": "^0.34.3",
     "tailwindcss": "^4.2.1",
     "tsx": "^4.21.0"
-  },
-  "devDependencies": {
-    "prettier": "3.8.1",
-    "prettier-plugin-astro": "0.14.1"
   }
 }
