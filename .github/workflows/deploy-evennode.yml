@@ -17,18 +17,13 @@ jobs:
           ref: master
 
       - name: EvenNode Deploy
-        uses: rodnye/evennode-deploy-action@v0.0.2-alpha
+        uses: rodnye/evennode-deploy-action@v2
         with:
+          key: ${{ secrets.SSH_KEY }}
+          git_url: ${{ secrets.EVENNODE_REPO_URL }}
           pre_commit_command: |
-            # this is a fix for action
-            rm -rf .git
-            git init
-            git branch -m main
+            git reset .
             npm install
             npm run blog:sync
             npm run build
             git add -f dist package.json package-lock.json
-          key: ${{ secrets.SSH_KEY }}
-          git_url: ${{ secrets.EVENNODE_REPO_URL }}
-          git_name: ${{ secrets.GIT_NAME }}
-          git_email: ${{ secrets.GIT_EMAIL }}
