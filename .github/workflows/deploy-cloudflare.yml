@@ -5,6 +5,10 @@ on:
       - master
       - editorial_workflow
 
+permissions:
+  contents: read
+  deployments: write
+
 jobs:
   build:
     name: Request Cloudflare Webhook

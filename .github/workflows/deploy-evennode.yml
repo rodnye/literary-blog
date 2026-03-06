@@ -6,6 +6,10 @@ on:
       - master
       - editorial_workflow
 
+permissions:
+  contents: read
+  deployments: write
+
 jobs:
   Deploy:
     runs-on: ubuntu-latest
