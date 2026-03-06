@@ -16,6 +16,7 @@ Website built with Astro. The repository separates source code from content thro
 - Netlify: https://quemeimporta.netlify.app
 - Cloudflare Pages: https://quemeimporta.pages.dev
 - Deno Deploy: https://quemeimporta.rodnye.deno.net/
+- Github Pages: https://rodnye.github.io/literary-blog/
 
 ## Branches
 
