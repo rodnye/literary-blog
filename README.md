@@ -15,6 +15,7 @@ Website built with Astro. The repository separates source code from content thro
 - Vercel: https://quemeimporta.vercel.app
 - Netlify: https://quemeimporta.netlify.app
 - Cloudflare Pages: https://quemeimporta.pages.dev
+- Deno Deploy: https://quemeimporta.rodnye.deno.net/
 
 ## Branches
 
