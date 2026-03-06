@@ -4,43 +4,43 @@
 ![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)
 ![Decap CMS](https://img.shields.io/badge/Decap%20CMS-6E2C8C?style=for-the-badge&logo=decap-cms&logoColor=white)
 ![Decap Bridge](https://img.shields.io/badge/Decap%20Bridge-4A90E2?style=for-the-badge&logo=auth0&logoColor=white)
-![Netlify](https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)
 ![pnpm](https://img.shields.io/badge/pnpm-F69220?style=for-the-badge&logo=pnpm&logoColor=white)
 
-Sitio web construido con Astro, disponible en [quemeimporta.netlify.app](https://quemeimporta.netlify.app). El repositorio separa el código fuente del contenido mediante un flujo basado en dos ramas y un script de actualización.
+Website built with Astro. The repository separates source code from content through a workflow based on two branches and an update script.
 
-## Ramas
+## Branches
 
-- **master** – Código fuente de la aplicación Astro.
-- **editorial_workflow** – Contenido del blog (markdown e imágenes).
+- **master** – Astro application source code.
+- **editorial_workflow** – Blog content (markdown and images).
 
-## Flujo de contenido
+## Content workflow
 
-El contenido se gestiona de forma aislada. En `master` hay un script que descarga un ZIP de la rama `editorial_workflow` y lo copia en los directorios correspondientes (`src/content`, `src/assets/images`), respetando `.gitignore` anidados para evitar versionar el contenido.
+Content is managed in isolation. In `master` there is a script that downloads a ZIP from the `editorial_workflow` branch and copies it to the corresponding directories (`src/content`, `src/assets/images`), respecting nested `.gitignore` files to avoid versioning the content.
 
 ```bash
 pnpm blog:sync
 ```
 
-## CMS y autenticación
+## CMS and authentication
 
-- **Decap CMS** interfaz en `/admin` para editar contenido.
-- **Decap Bridge** gestiona el identity login con GitHub.
+- **Decap CMS** interface at `/admin` for editing content.
+- **Decap Bridge** manages identity login with GitHub.
 
-Los cambios se comitean automáticamente en la rama `editorial_workflow`.
+Changes are automatically committed to the `editorial_workflow` branch.
 
-## Instalación local
+## Local installation
 
 ```bash
 git clone https://github.com/rodnye/literary-blog.git
 cd literary-blog
 pnpm install
-pnpm blog:sync # Opcional, pero el blog estará vacío
+pnpm blog:sync # Optional, but the blog will be empty
 pnpm dev
 ```
 
 ---
 
-Enlaces de interés:
-- [Docs de Astro](https://astro.build)
+Useful links:
+
+- [Astro Docs](https://astro.build)
 - [Decap CMS](https://decapcms.org/docs/)
