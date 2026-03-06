@@ -1,10 +1,11 @@
 import { createWriteStream, promises as fs } from 'fs';
 import { tmpdir } from 'os';
-import { join, resolve } from 'path';
+import { join, resolve, dirname } from 'path';
 import { pipeline } from 'stream/promises';
 import * as https from 'https';
 import * as dotenv from 'dotenv';
 import AdmZip from 'adm-zip';
+import glob from 'fast-glob';
 
 dotenv.config();
 
@@ -76,39 +77,26 @@ const download = (fileUrl: string, dest: string) =>
   });
 
 /**
- * Copia recursivamente archivos y directorios
+ * asegura que un archivo exista (lo crea vacío si no existe)
  */
-const copyRecursive = async (src: string, dest: string) => {
-  const stat = await fs.stat(src);
-  if (stat.isDirectory()) {
-    await fs.mkdir(dest, { recursive: true });
-    const entries = await fs.readdir(src);
-    for (const entry of entries) {
-      await copyRecursive(join(src, entry), join(dest, entry));
-    }
-
-    const files = await fs.readdir(src);
-    const filesInCurrentDir: string[] = [];
-
-    for (const file of files) {
-      const filePath = join(src, file);
-      const fileStat = await fs.stat(filePath);
-      if (fileStat.isFile()) {
-        filesInCurrentDir.push(file);
-      }
-    }
-
-    if (filesInCurrentDir.length > 0) {
-      const ignoreContent = [
-        '.gitignore',
-        ...filesInCurrentDir.filter((f) => f !== '.gitignore'),
-      ].join('\n');
-      await fs.writeFile(join(dest, '.gitignore'), ignoreContent);
-    }
-  } else {
-    await fs.mkdir(resolve(dest, '..'), { recursive: true });
-    await fs.copyFile(src, dest);
+const ensureGitignore = async (filePath: string) => {
+  try {
+    await fs.access(filePath);
+  } catch {
+    await fs.writeFile(filePath, '.gitignore\n');
   }
+};
+
+/**
+ * add una entrada al .gitignore si no existe ya
+ */
+const appendToGitignore = async (dir: string, entry: string) => {
+  const gitignorePath = join(dir, '.gitignore');
+
+  await ensureGitignore(gitignorePath);
+
+  await fs.appendFile(gitignorePath, `${entry}\n`);
+  console.log(`  → Agregado "${entry}" a ${gitignorePath}`);
 };
 
 const main = async () => {
@@ -120,32 +108,44 @@ const main = async () => {
 
   console.log('extrayendo archivos');
 
-  // Usando adm-zip en lugar de unzipper
   const zip = new AdmZip(tempZip);
   zip.extractAllTo(extractDir, true);
 
   const contentDir = join(
     extractDir,
     (await fs.readdir(extractDir))[0], // entrar a la carpeta del zip
-    '/src', // solo copiar src
   );
-  const entries = await fs.readdir(contentDir);
-  for (const entry of entries) {
-    if (entry === 'README.md') continue;
-    const fullPath = join(contentDir, entry);
-    await copyRecursive(fullPath, join(process.cwd(), '/src', entry));
+
+  // Leer el archivo copy.json
+  const seedJsonPath = join(contentDir, 'copy.json');
+  const seedJsonContent = await fs.readFile(seedJsonPath, 'utf-8');
+  const config = JSON.parse(seedJsonContent);
+
+  const filesToCopy = await glob(config.include || [], {
+    cwd: contentDir,
+    ignore: config.exclude || [],
+    dot: true,
+  });
+
+  for (const relativePath of filesToCopy) {
+    const src = join(contentDir, relativePath);
+    const dest = resolve(process.cwd(), relativePath);
+    const destDir = dirname(dest);
+    const fileName = relativePath.split('/').pop()!;
+
+    console.log(`Copiando: ${relativePath}`);
+
+    await fs.mkdir(destDir, { recursive: true });
+    await fs.copyFile(src, dest);
+    await appendToGitignore(destDir, fileName);
   }
 
-  // Limpieza de archivos temporales
   await fs.rm(tempZip, { force: true });
   await fs.rm(extractDir, { recursive: true, force: true });
 };
 
 main()
-  .then(() => {
-    console.log('proceso finalizado');
-    process.exit(0);
-  })
+  .then(() => console.log('proceso finalizado'))
   .catch((err) => {
     console.error(err);
     process.exit(1);
