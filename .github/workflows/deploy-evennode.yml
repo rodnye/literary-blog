@@ -16,6 +16,14 @@ jobs:
         with:
           ref: master
 
+      - uses: chrnorm/deployment-action@v2
+        name: Create Evennode deployment
+        id: deployment
+        with:
+          token: '${{ github.token }}'
+          environment-url: http://quemeimporta.eu-4.evennode.com/
+          environment: evennode
+
       - name: EvenNode Deploy
         uses: rodnye/evennode-deploy-action@v2
         with:
@@ -27,3 +35,21 @@ jobs:
             npm run blog:sync
             npm run build
             git add -f dist package.json package-lock.json
+
+      - name: Update deployment status (success)
+        if: success()
+        uses: chrnorm/deployment-status@v2
+        with:
+          token: '${{ github.token }}'
+          environment-url: ${{ steps.deployment.outputs.environment_url }}
+          deployment-id: ${{ steps.deployment.outputs.deployment_id }}
+          state: 'success'
+
+      - name: Update deployment status (failure)
+        if: failure()
+        uses: chrnorm/deployment-status@v2
+        with:
+          token: '${{ github.token }}'
+          environment-url: ${{ steps.deployment.outputs.environment_url }}
+          deployment-id: ${{ steps.deployment.outputs.deployment_id }}
+          state: 'failure'
