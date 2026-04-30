@@ -8,7 +8,7 @@
     "preview": "astro preview",
     "start": "serve ./dist",
     "astro": "astro",
-    "blog:sync": "tsx ./scripts/blog-sync.ts"
+    "blog:sync": "repo-sync -f .blog-data.json"
   },
   "dependencies": {
     "serve": "^14.2.6"
@@ -22,12 +22,9 @@
     "@tailwindcss/vite": "^4.2.1",
     "astro": "^5.17.1",
     "astro-icon": "^1.1.5",
-    "dotenv": "^17.3.1",
-    "fast-glob": "^3.3.3",
     "prettier": "3.8.1",
     "prettier-plugin-astro": "0.14.1",
     "sharp": "^0.34.3",
-    "simple-git": "^3.32.3",
     "tailwindcss": "^4.2.1",
     "tsx": "^4.21.0"
   }

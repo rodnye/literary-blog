@@ -1,5 +1,10 @@
 # build output
 dist/
+
+# blog data
+src/assets/images/uploads
+src/content/blog
+
 # generated types
 .astro/
 

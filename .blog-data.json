@@ -1,0 +1,15 @@
+{
+  "repo": "https://github.com/rodnye/literary-blog.git",
+  "branch": "editorial_workflow",
+  "target": ".",
+  "mappings": [
+    {
+      "include": ["src/content/blog/*"],
+      "dest": "src/content/blog/"
+    },
+    {
+      "include": ["src/assets/images/uploads/*"],
+      "dest": "src/assets/images/uploads/"
+    }
+  ]
+}
