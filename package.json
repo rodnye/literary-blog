@@ -18,6 +18,7 @@
     "@astrojs/rss": "^4.0.15",
     "@astrojs/sitemap": "^3.7.0",
     "@iconify-json/simple-icons": "^1.2.71",
+    "@rodny/repo-sync": "^0.0.2",
     "@tailwindcss/vite": "^4.2.1",
     "astro": "^5.17.1",
     "astro-icon": "^1.1.5",
