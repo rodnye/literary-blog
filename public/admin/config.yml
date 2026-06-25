@@ -22,7 +22,7 @@ backend:
 logo_url: https://decapbridge.com/decapcms-with-bridge.svg
 
 # Add site links in Decap CMS (optional)
-site_url: https://quemeimporta.pages.dev
+site_url: https://quemeimporta.vercel.app
 
 collections:
   - name: 'blog' # Used in routes, e.g., /admin/collections/blog
