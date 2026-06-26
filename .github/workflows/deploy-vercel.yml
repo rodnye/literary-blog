@@ -10,6 +10,6 @@ jobs:
   build:
     name: Request Vercel Webhook
     runs-on: ubuntu-latest
-    steps:i
+    steps:
       - name: Curl request
         run: curl -X POST -d {} ${{ secrets.VERCEL_BUILD_HOOK }}
